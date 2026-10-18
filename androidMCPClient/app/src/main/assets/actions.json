@@ -19,6 +19,12 @@
       "output": "toast"
     },
     {
+      "tool_id": "send_vocal",
+      "label": "Send Message",
+      "inputs": ["audio", "text"],
+      "output": "toast"
+    },
+    {
       "tool_id": "tool_stt",
       "label": "STT",
       "inputs": ["audio"],

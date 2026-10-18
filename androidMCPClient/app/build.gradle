@@ -55,27 +55,3 @@ tasks.register('checkConfigJson') {
 tasks.named('preBuild') {
     dependsOn('checkConfigJson')
 }
-
-tasks.register('syncExternalConfig') {
-    doLast {
-        def userHome = System.getProperty('user.home')
-        def externalDir = file("${userHome}/Documents/mcp-android-bridge")
-        def externalConfig = file("${externalDir}/config.json")
-        def templateConfig = file("${projectDir}/src/main/assets/template_config.json")
-        def targetAssetConfig = file("${projectDir}/src/main/assets/config.json")
-
-        if (!externalDir.exists()) {
-            externalDir.mkdirs()
-        }
-
-        if (!externalConfig.exists()) {
-            println "--> [Config] Initializing: copying template_config.json to ${externalConfig}"
-            externalConfig.bytes = templateConfig.bytes
-        }
-
-        println "--> [Config] Using: ${externalConfig.absolutePath}"
-        targetAssetConfig.bytes = externalConfig.bytes
-    }
-}
-
-preBuild.dependsOn syncExternalConfig
