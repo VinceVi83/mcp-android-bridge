@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Commande Vocale MCP"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#212121"
+        android:layout_marginBottom="12dp" />
+
+    <!-- RadioGroup peuplé dynamiquement selon l'ordre du JSON -->
+    <RadioGroup
+        android:id="@+id/radio_group_modes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sélectionnez un mode et appuyez sur le micro"
+        android:textColor="#666666"
+        android:textSize="13sp"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Bouton pour lancer l'enregistrement vocal -->
+    <Button
+        android:id="@+id/btn_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🎤 Parler"
+        android:backgroundTint="#1976D2"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>

@@ -218,3 +218,28 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+**/local.properties
+.gradle/
+**/build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.ap_
+*.aab
+*.dex
+
+*.keystore
+*.jks
+
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+.gradle/
+androidMCPClient/.gradle/
+**/build/
+**/local.properties
+androidMCPClient/app/src/main/assets/config.json

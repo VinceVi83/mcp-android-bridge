@@ -1,0 +1,7 @@
+{
+  "server": {
+    "host": "YOUR_MCP_SERVER_IP",
+    "port": 8443,
+    "token": "PLACEHOLDER_TOKEN"
+  }
+}

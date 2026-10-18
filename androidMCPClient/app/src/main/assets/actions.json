@@ -1,0 +1,58 @@
+{
+  "tools": [
+    {
+      "tool_id": "tool_ask_multiroom",
+      "label": "Multiroom",
+      "inputs": ["audio", "text"],
+      "output": "none"
+    },
+    {
+      "tool_id": "tool_ask_mcp",
+      "label": "Ask MCP",
+      "inputs": ["audio", "text"],
+      "output": "toast"
+    },
+    {
+      "tool_id": "send_msg",
+      "label": "Send Message",
+      "inputs": ["audio", "text"],
+      "output": "toast"
+    },
+    {
+      "tool_id": "tool_stt",
+      "label": "STT",
+      "inputs": ["audio"],
+      "output": "copy_clipboard"
+    },
+    {
+      "tool_id": "tool_dicte_translate",
+      "label": "Dictation Translate",
+      "inputs": ["audio"],
+      "params": {
+        "target_lang": "en"
+      },
+      "output": "copy_clipboard"
+    },
+    {
+      "tool_id": "tool_correct",
+      "label": "Correct",
+      "inputs": ["text"],
+      "output": "copy_clipboard"
+    },
+    {
+      "tool_id": "tool_translate",
+      "label": "Translate",
+      "inputs": ["text"],
+      "params": {
+        "target_lang": "en"
+      },
+      "output": "copy_clipboard"
+    },
+    {
+      "tool_id": "tool_check_info",
+      "label": "Check Info",
+      "inputs": ["text"],
+      "output": "toast"
+    }
+  ]
+}

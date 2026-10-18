@@ -1,0 +1,81 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.poc.textmenu'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.poc.textmenu"
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // Si tu utilises du JSON / Réseau (MCP client) :
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+}
+
+tasks.register('checkConfigJson') {
+    doLast {
+        def configFile = file("src/main/assets/config.json")
+
+        if (!configFile.exists()) {
+            throw new GradleException(
+                "\n======================================================================\n" +
+                "BUILD FAILED: 'app/src/main/assets/config.json' NOT FOUND!\n" +
+                "======================================================================"
+            )
+        }
+
+        if (configFile.text.trim().isEmpty()) {
+            throw new GradleException(
+                "\n======================================================================\n" +
+                "BUILD FAILED: 'app/src/main/assets/config.json' IS EMPTY!\n" +
+                "======================================================================"
+            )
+        }
+    }
+}
+
+tasks.named('preBuild') {
+    dependsOn('checkConfigJson')
+}
+
+tasks.register('syncExternalConfig') {
+    doLast {
+        def userHome = System.getProperty('user.home')
+        def externalDir = file("${userHome}/Documents/mcp-android-bridge")
+        def externalConfig = file("${externalDir}/config.json")
+        def templateConfig = file("${projectDir}/src/main/assets/template_config.json")
+        def targetAssetConfig = file("${projectDir}/src/main/assets/config.json")
+
+        if (!externalDir.exists()) {
+            externalDir.mkdirs()
+        }
+
+        if (!externalConfig.exists()) {
+            println "--> [Config] Initializing: copying template_config.json to ${externalConfig}"
+            externalConfig.bytes = templateConfig.bytes
+        }
+
+        println "--> [Config] Using: ${externalConfig.absolutePath}"
+        targetAssetConfig.bytes = externalConfig.bytes
+    }
+}
+
+preBuild.dependsOn syncExternalConfig
