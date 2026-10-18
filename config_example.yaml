@@ -1,31 +1,3 @@
-dico:
-  key1: null
-  key2: null
-dico2:
-  dico_dico:
-    key1: true
-    key2: null
-  key1: true
-  key2: false
-key1: value
-key2: false
-mixed_config:
-  active: true
-  details:
-    logs:
-    - error.log
-    - access.log
-    retention: 30
-  names:
-  - alice
-  - bob
-  - charlie
-my_list:
-- item1
-- item2
-- item3
-servers:
-- host: 192.168.1.1
-  port: 8080
-- host: 192.168.1.2
-  port: 9090
+conf:
+  token: YOUR_TOKEN
+  port: 8001
