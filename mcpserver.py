@@ -13,9 +13,8 @@ from starlette.exceptions import HTTPException
 from fastmcp import FastMCP
 
 from common.llm_client import llm
-from common.conf_manager import cfg, Utils, setup_logging
+from common.conf_manager import cfg, Utils
 
-setup_logging()
 logger = logging.getLogger(__name__)
 
 mcp = FastMCP('AndroidMCPServer')
@@ -61,6 +60,7 @@ def _save_temp_audio(audio_base64: str, format_ext: str = "m4a") -> tuple[str, s
 def tool_correct(text: str) -> str:
     res = llm.call(cfg.agents.corrector, text, model=cfg.llm_models.creative, mode='summarize')
     text = Utils.extract_llm_response(res)
+    logger.info(f'Corrected text: {text}')
     return f'{text}'
 
 @mcp.tool()
@@ -148,8 +148,9 @@ def send_vocal(text: str = '', audio_base64: str = '', format_ext: str = 'm4a') 
         try:
             Utils.play_announcement(file_path)
         finally:
-            if os.path.exists(file_path):
-                os.remove(file_path)
+            return 'OK'
+            # if os.path.exists(file_path):
+            #     os.remove(file_path)
     else:
         cmd = ''
     return 'OK'
@@ -181,7 +182,7 @@ async def route_call(request: Request) -> Response:
 
     tool_name = payload.get('tool', '')
     args = payload.get('args', {})
-    if not tool_name.startswith('tool_'):
+    if not (tool_name.startswith('tool_') or tool_name.startswith('send_')):
         return Response('Tool not found', status_code=404)
 
     func = globals().get(tool_name)
@@ -200,7 +201,6 @@ class AuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         if request.url.path.startswith("/audio/"):
             return await call_next(request)
-
         if request.headers.get('X-Auth-Token') != cfg.conf.token:
             return Response('Unauthorized', status_code=401)
         return await call_next(request)
