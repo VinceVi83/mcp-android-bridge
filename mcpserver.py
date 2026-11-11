@@ -53,7 +53,7 @@ def _save_temp_audio(audio_base64: str, format_ext: str = "m4a") -> tuple[str, s
     with open(file_path, "wb") as f:
         f.write(audio_bytes)
 
-    url = f"https://{Utils.get_local_ip()}:{cfg.conf.port}/audio/{filename}"
+    url = f"https://{cfg.lanip}:{cfg.conf.port}/audio/{filename}"
     return url, file_path
 
 @mcp.tool()
